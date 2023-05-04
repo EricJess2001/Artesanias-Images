@@ -1,8 +1,22 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 
 function App() {
 
   const [file, setFile] = useState(null)
+  const [imageList, setImageList] = useState([])
+  const [ListUpdated, setListUpdated] = useState(false)
+   
+
+   useEffect(() => {
+     fetch('http://localhost:9000/images/get')
+    .then(res => res.json())
+    .then(res => setImageList(res))
+    .catch(err => {
+      console.error(err)
+    })
+    setListUpdated(false)
+   }, [ListUpdated])
+
 
   const selectedHander = e => {
     setFile(e.target.files[0])
@@ -22,7 +36,10 @@ function App() {
       body: formdata
     })
     .then(res => res.text())
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      setListUpdated(true)
+    })
     .catch(err => {
       console.error(err)
     })
@@ -57,10 +74,22 @@ function App() {
   </div>
  </div>
 
+ <div className="container mt-4" style={{display: "flex", flexWrap: "wrap"}}>
+     {imageList.map(image => (
+      <div key={image}  className="card m-2">
+      <img src={'http://localhost:9000/' + image} alt="..." className="card-img-top" style={{height: "200px", width: "261px"}}/>
+    </div>
+     ))}
+
+ </div>
+
  </Fragment>
+
+
 
 
   );
 }
 
 export default App;
+
