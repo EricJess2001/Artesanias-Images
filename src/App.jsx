@@ -6,17 +6,10 @@ function App() {
   const [file, setFile] = useState(null)
   const [imageList, setImageList] = useState([])
   const [ListUpdated, setListUpdated] = useState(false)
-
   const [currentImage, setCurrentImage] = useState(null)
-
-
   const [modalLisOpen, setModaLisOpen] = useState(false)
 
-
-
-
   useState(() => {
-
 
   }
   
